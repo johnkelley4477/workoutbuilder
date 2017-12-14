@@ -1,0 +1,87 @@
+<html>
+	<head>
+		<style type="text/css">
+			#selects{
+			    width: 290px;
+			    margin: auto;
+			    padding: 5px;
+			}
+			#workouts{
+			    width: 215px;
+			    margin: auto;
+			    padding: 5px;
+			}
+			.workout{
+				margin-left: 20px;
+			}
+			.workouts{
+				margin-top: 10px;
+				font-size: 18px;
+				font-weight: bold;
+			}
+			.reps{
+				width:54px;
+			}
+			#distance{
+				text-align: center;
+			}
+			textarea{
+				margin-top: 5px;
+				width:193px;
+			}
+			body{
+				font-family: sans-serif;
+			}
+			input, select, textarea{
+				font-size: 16px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id='selects'>
+			<input type='number' name'distance' id='distance' placeholder='Running Distance'/>
+			<select name='interval' id='interval'>
+				<option disabled selected>interval</option>
+				<option value="0.25">quater mile</option>
+				<option value="0.5">half mile</option>
+				<option value="1">1 mile</option>
+				<option value="2">2 mile</option>
+			</select>	
+		</div>
+		<div id="workouts">
+
+		</div>
+	</body>
+	<footer>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script type="text/javascript">
+			const workout = "<div class='workouts'>^ miles<div class='workout'><select name='workout~'>"+
+					"<option value='0' selected disabled>workout type</option>"+
+					"<option value='burpes'>Burpes</option>"+
+					"<option value='jaxs'>Jumping Jaxes</option>"+
+					"<option value='abs'>Ab Work</option>"+
+					"<option value='monkey'>Monkey Bars</option>"+
+					"<option value='pullups'>pullups</option>"+
+					"</select><input type='number' name='quantity~' class='reps' placeholder='reps'/>"+
+					"<textarea name='workoutcomment~' placeholder='How did it go.' col='10' row='2'/></div></div>";
+
+			$('#interval, #distance').on('change',function(){
+				getIntervals();
+			});
+
+			function getIntervals(){
+				var distance = $('#distance').val(),
+					interval = $('#interval').val();
+				$('.workouts').remove();
+				if(distance > 1 && interval > 0){
+					var count = distance / interval,
+						intervalTotal = interval;
+					for(i = 0; i < count; i++){
+						$('#workouts').append(workout.replace(/~/g,i).replace('^',parseFloat(intervalTotal).toFixed(2)));
+						intervalTotal = parseFloat(intervalTotal) + parseFloat(interval);
+					}
+				}
+			}
+		</script>
+	</footer>
+</html>
