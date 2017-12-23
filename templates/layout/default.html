@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>  
+<head>  
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Workout Builder</title>
+    <meta name="HandheldFriendly" content="True" />
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <style type="text/css">
+			#selects{
+			    width: 205px;
+			    margin: auto;
+			    margin-top:15px;
+			    padding: 5px;
+			    display: grid;
+			}
+			#selects.btnbox{
+				width:100px;
+			}
+			#selects.btnbox .btn{
+				margin: 0px;
+			}
+			#selects.block{
+				display: block;
+    			width: 930px;
+			}
+			#workouts{
+			    width: 100%;
+			    background-image: url(http://obstacleracingmedia-zone.xjxqn70rpaabk.netdna-cdn.com/wp-content/uploads/2015/05/spartan-race-logo-300x300.jpg);
+			    background-repeat: no-repeat;
+			    background-attachment: fixed;
+			    background-size: 600px;
+			    background-position: center;
+			}
+			.workout{
+				margin: auto;
+				padding: 10px;
+				width:600px;
+			}
+			.even {
+			    background-color: rgba(0, 128, 0,0.95);
+			}
+			.even label{
+			    color: #fff;
+			}
+			.odd {
+			    background-color: rgba(255, 255, 255,0.95);
+			}
+			.odd label{
+			    color: rgba(0, 128, 0,1);
+			}
+			.workouts{
+				margin: auto;
+				font-size: 18px;
+				width:630px;
+				padding:10px;
+			}
+			.reps{
+				width:54px;
+			}
+			#route {
+			    width: 195px;
+			}
+			.miles {
+			    width: 60px;
+			}
+			.el {
+			    display: inline-grid;
+			    margin-right: 15px;
+		        min-width: 100px;
+			}
+			#header{
+				background-color: green;
+				color: #fff;
+				height:85px;
+				width:100%;
+			}
+			.btn{
+			    -webkit-appearance: none;
+			    background-color: green;
+			    color: #fff;
+			    float: right;
+			    font-size: 18pt;
+			    margin: 20px;
+			}
+			#header h1{
+				margin-top: 0px;
+				padding-top: 15px;
+				margin-bottom: 0px;
+			}
+			#header p{
+			    margin-top: 5px;
+    			margin-left: 10px;
+			}
+			body{
+				font-family: sans-serif;
+				margin: 0px
+			}
+			input, select, textarea{
+				font-size: 16px;
+			}
+			input{
+				text-align: center;
+				min-width: 100px;
+			}
+			label {
+			    color: green;
+			    padding: 3px;
+			    font-size: 16px;
+			    margin-top: 10px;
+			    text-align: center;
+			}
+			select{
+				background-color: #fff;
+				border: 1px solid #ddd;
+				height: 27px;
+			}
+		</style>
+</head>  
+<body>
+	{{> header}}
+    <div class="container">
+        {{{content}}}
+    </div>
+    {{> footer}}
+</body>  
+</html>  

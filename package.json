@@ -28,7 +28,12 @@
     "handlebars-helpers": "git+ssh://git@vmlnxatlstash.lowes.com:42000/di/handlebars-helpers.git#v1.0.0",
     "hapi": "11.1.0",
     "inert": "3.2.0",
+    "lodash": "^4.17.4",
     "path": "^0.12.7",
     "vision": "4.0.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "mongodb": "^2.2.33"
   }
 }

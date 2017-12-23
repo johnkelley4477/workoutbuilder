@@ -1,0 +1,55 @@
+<form action='workout' method='POST'>
+	<div id='selects'>
+		<label for='date'>Date</label>
+		<input type='date' name='date' id='date'/>
+		<label for='route'>Route</label>
+		<input type='text' name='route' id='route'/>
+		<label for='distance'>Distance</label>
+		<input type='number' name='distance' id='distance' />
+		<label for='interval'>Intervals</label>
+		<select name='interval' id='interval'>
+			<option disabled selected>interval</option>
+			<option value="0.25">quater mile</option>
+			<option value="0.5">half mile</option>
+			<option value="1">1 mile</option>
+			<option value="2">2 mile</option>
+		</select>	
+	</div>
+	<div id="selects" class="btnbox">
+		<input class='btn' type='submit'>
+	</div>
+</form>
+<script>
+	var today = new Date();
+	$('#date').val(today.getFullYear()  + '-' +  (today.getMonth() + 1) + '-' + today.getDate());
+  $( function() {
+  	//var workoutTypes = {{workoutArray}};
+    var availableTags = [
+      "ActionScript",
+      "AppleScript",
+      "Asp",
+      "BASIC",
+      "C",
+      "C++",
+      "Clojure",
+      "COBOL",
+      "ColdFusion",
+      "Erlang",
+      "Fortran",
+      "Groovy",
+      "Haskell",
+      "Java",
+      "JavaScript",
+      "Lisp",
+      "Perl",
+      "PHP",
+      "Python",
+      "Ruby",
+      "Scala",
+      "Scheme"
+    ];
+    $( "#route" ).autocomplete({
+      source: availableTags
+    });
+  } );
+  </script>

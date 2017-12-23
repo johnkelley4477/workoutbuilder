@@ -1,0 +1,74 @@
+<form action='workout/report' method='POST'>
+  <div id='selects' class='block'>
+  	<label for='date'>Date</label>
+  	<input type='date' name='date' id='date' value='{{date}}' />
+  	<label for='route'>Route</label>
+  	<input type='text' name='route' id='route' value='{{route}}' />
+  	<label for='distance'>Distance</label>
+  	<input type='number' name='distance' id='distance' value='{{distance}}'/>
+  	<label for='interval'>Intervals</label>
+  	<select name='interval' id='interval'>
+  		<option disabled>interval</option>
+  		<option value="0.25">quater mile</option>
+  		<option value="0.5">half mile</option>
+  		<option value="1">1 mile</option>
+  		<option value="2">2 mile</option>
+  	</select>	
+    <input type='button' id='resubmit' value='Re-Submit' class='btn'/>
+  </div>
+  <div id="workouts">
+    {{#forLoop 0 count 1 interval}}
+      {{> exercise}}
+    {{/forLoop}}
+  </div>
+  <input class='btn' type='submit'/>
+</form>
+<script>
+	 $( function() {
+  	//var workoutTypes = {{workoutArray}};
+    var availableTags = [
+      "ActionScript",
+      "AppleScript",
+      "Asp",
+      "BASIC",
+      "C",
+      "C++",
+      "Clojure",
+      "COBOL",
+      "ColdFusion",
+      "Erlang",
+      "Fortran",
+      "Groovy",
+      "Haskell",
+      "Java",
+      "JavaScript",
+      "Lisp",
+      "Perl",
+      "PHP",
+      "Python",
+      "Ruby",
+      "Scala",
+      "Scheme"
+    ];
+    $( "#route" ).autocomplete({
+      source: availableTags
+    });
+  } );
+
+  $('#resubmit').on(()=>{
+    var data = { 
+      date: $('#date').val(),
+      route: $('#route').val(),
+      distance: $('#distance').val(),
+      interval: $('#interval').val()
+    };
+
+    $.ajax({
+      type: "POST",
+      url: "/workout",
+      data: data,
+      success: success,
+      dataType: dataType
+    });
+  });
+  </script>
