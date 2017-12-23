@@ -25,7 +25,6 @@
     "good-file": "6.0.1",
     "good-squeeze": "4.0.0",
     "handlebars": "4.0.4",
-    "handlebars-helpers": "git+ssh://git@vmlnxatlstash.lowes.com:42000/di/handlebars-helpers.git#v1.0.0",
     "hapi": "11.1.0",
     "inert": "3.2.0",
     "lodash": "^4.17.4",
