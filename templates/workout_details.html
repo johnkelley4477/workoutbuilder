@@ -1,0 +1,34 @@
+<form action='/workout/report' method='POST'>
+  <div id='selects' class='block'>
+  	<label for='date'>Date</label>
+  	<input type='date' name='date' id='date' value='{{date}}' />
+  	<label for='route'>Route</label>
+  	<input type='text' name='route' id='route' value='{{route}}' />
+  	<label for='distance'>Distance</label>
+  	<input type='number' name='distance' id='distance' value='{{distance}}'/>
+  	<label for='interval'>Intervals</label>
+    <input name='interval' id='interval'  value='{{interval}}'/>	
+    <input type='button' id='resubmit' value='Re-Submit' class='btn'/>
+  </div>
+  <div id="workouts">
+    {{#forLoop 0 interval 1 distance}}
+      {{> exercise}}
+    {{/forLoop}}
+  </div>
+  <input class='btn' type='submit'/>
+</form>
+<script>
+  var exercises = '{{past}}';
+	$( function() {
+  	//var workoutTypes = {{workoutArray}};
+    const tags = '{{workoutArray}}',
+        availableTags = tags.split(',');
+    $( "#route" ).autocomplete({
+      source: availableTags
+    });
+  } );
+
+  $('#resubmit').on('click',()=>{
+    window.location = '/workout/'+ $('#route').val() + "/" +  $('#date').val() + "/" +  $('#distance').val() + "/" +  $('#interval').val();
+  });
+  </script>
