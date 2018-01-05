@@ -1,55 +1,33 @@
-<form action='workout' method='POST'>
+<form action='/workout' method='GET'>
 	<div id='selects'>
 		<label for='date'>Date</label>
-		<input type='date' name='date' id='date'/>
+		<input type='date' name='date' id='date' required/>
 		<label for='route'>Route</label>
-		<input type='text' name='route' id='route'/>
+		<input type='text' name='route' id='route' value='{{route}}' required/>
 		<label for='distance'>Distance</label>
-		<input type='number' name='distance' id='distance' />
+		<input type='number' step="any" name='distance' id='distance' value='{{distance}}' required/>
 		<label for='interval'>Intervals</label>
-		<select name='interval' id='interval'>
-			<option disabled selected>interval</option>
-			<option value="0.25">quater mile</option>
-			<option value="0.5">half mile</option>
-			<option value="1">1 mile</option>
-			<option value="2">2 mile</option>
-		</select>	
+		<input name='interval' id='interval'  value='{{interval}}' required/>
 	</div>
 	<div id="selects" class="btnbox">
-		<input class='btn' type='submit'>
+		<input class='btn' type='submit' />
 	</div>
 </form>
 <script>
 	var today = new Date();
-	$('#date').val(today.getFullYear()  + '-' +  (today.getMonth() + 1) + '-' + today.getDate());
-  $( function() {
-  	//var workoutTypes = {{workoutArray}};
-    var availableTags = [
-      "ActionScript",
-      "AppleScript",
-      "Asp",
-      "BASIC",
-      "C",
-      "C++",
-      "Clojure",
-      "COBOL",
-      "ColdFusion",
-      "Erlang",
-      "Fortran",
-      "Groovy",
-      "Haskell",
-      "Java",
-      "JavaScript",
-      "Lisp",
-      "Perl",
-      "PHP",
-      "Python",
-      "Ruby",
-      "Scala",
-      "Scheme"
-    ];
-    $( "#route" ).autocomplete({
-      source: availableTags
-    });
-  } );
+	$('#date').val(today.getFullYear()  + '-' +  ("0" + (today.getMonth() + 1)).slice(-2) + '-' + ("0" + today.getDate()).slice(-2));
+  	$( function() {
+	  	const tags = '{{workoutArray}}',
+	    	availableTags = tags.split(',');
+	    $( "#route" ).autocomplete({
+	      source: availableTags
+	    });
+	  })
+  	$('#route').on('change',()=>{
+  		window.location = '/workout/'+ $('#route').val();
+  	});
+  	$('.btn').on('click',()=>{
+  		$('form').attr('action', '/workout/'+ $('#route').val() + "/" +  $('#date').val() + "/" +  $('#distance').val() + "/" +  $('#interval').val());
+  	});
+
   </script>

@@ -1,21 +1,23 @@
 var _ = require('lodash'),forLoop;
 
-forLoop  = function(from, to, incr, interval, context){
+forLoop  = function(from, to, incr, distance, context){
 	if(_.isEmpty(context)){
 		return 0;
 	}
+
 	var accum = '',
-		intervalTotal = interval;
+		mileageStep = parseFloat(distance)/parseFloat(to);
+        mileage = mileageStep;
     for(var i = from; i < to; i += incr){
     	if(i%2==0){
     		context.data.flip = "even";
     	}else{
     		context.data.flip = "odd";
     	}
-    	context.data.mileage = intervalTotal;
+    	context.data.mileage = mileage;
     	context.data.index = i;
         accum += context.fn(this);
-        intervalTotal = parseFloat(intervalTotal) + parseFloat(interval);
+        mileage = mileage + mileageStep;
     }
     return accum;
 }
