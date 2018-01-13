@@ -14,7 +14,8 @@ function postWorkoutData(data,callback){
 	  db.collection("workouts").insertOne(data, function(err, res) {
 	    if (err) throw err;
 	    if(res.result.ok === 1){
-	    	callback(res.result)
+	    	
+	    	callback(null,res.ops[0]);
 	    }
 	    db.close();
 	  });
@@ -97,6 +98,7 @@ function dataNomilizer(data,callback){
 	payload["route"] = data.route;
 	payload["distance"] = data.distance;
 	payload["interval"] = data.interval;
+	payload["comments"] = data.comments;
 	payload["timestamp"] = new Date();
 
 	// build the index
@@ -114,15 +116,14 @@ function dataNomilizer(data,callback){
 		intervals = parseFloat(intervals) + parseFloat(data.interval);
 	};
 	payload["exercises"] = exercises;
-
-	callback(null,payload);
-	// postWorkoutData(payload,function(err,msg){
-	// 	if(err){
-	// 		callback(err);
-	// 	}else{
-	// 		callback(null,msg[0]);
-	// 	}
-	// });
+	// callback(null,payload);
+	postWorkoutData(payload,function(err,msg){
+		if(err){
+			callback(err);
+		}else{
+			callback(null,msg);
+		}
+	});
 }
 
 function pushUnique(array,value){
@@ -170,7 +171,7 @@ server.route({
 	        }
 	        
 	       return reply.view('workout',data);
-       });
+      });
     }
 });
 
@@ -178,7 +179,7 @@ server.route({
 	method:'GET',
 	path:'/workout/{route}',
 	handler: function (request, reply) {
-        getLastWorkoutDataByRoute(request.params.route,function(err,msg){
+       getLastWorkoutDataByRoute(request.params.route,function(err,msg){
 	        const route = request.params.route;
 	    	
 	    	let	distance = "",
@@ -211,13 +212,12 @@ server.route({
 	            route :route,
 				date : date,
 	 			distance : distance,
-	 			interval : interval
+	 			interval : interval,
+	 			past : msg[0].exercises
 	 		}
-			
-			data["past"] = JSON.stringify(msg[0]); 
 		    
 		    return reply.view('workout_details',data);
-	    });
+	   });
     }
 });
 
@@ -226,85 +226,35 @@ server.route({
 	path: '/workout/report',
 	config:{
         handler:function(request,reply){
-	 		const route = request.payload.route,
-	 			distance = request.payload.distance,
-	 			interval = request.payload.interval;
-
- 			var index = [],
- 				labels = [],
- 				chartData = {},
- 				workouts = [],
- 				reps = [],
- 				payload = request.payload,
- 				exeIndex = 0;
-
- 				dataNomilizer(payload,function(err,msg){
- 					if(err){
- 						console.log(err);
- 					}else{
- 						/*
-						contract for charData:
-							{
-								"burpies":[5,null,5],
-								"monkey bars":[null,20,null]
-							}
- 						*/
- 						msg.exercises.forEach(function(exercise){
- 							let isUnique = false,
- 								kill = false,
- 								reps = [];
-							workouts.forEach(function(item){
-								if(item === exercise.workout){
-									isUnique = false;
-									chartData[exercise.workout].splice( exeIndex, 0, exercise.quantity);
-									kill = true;
-								}else{
-
-									isUnique = true;
-								}
-							});
-							if(isUnique && !kill){
-								workouts.push(exercise.workout);
-								chartData[exercise.workout] = [];
-								chartData[exercise.workout].splice( exeIndex, 0, exercise.quantity);
-							}else if(workouts.length < 1){
-								workouts.push(exercise.workout);
-								chartData[exercise.workout] = [];
-								chartData[exercise.workout].push(exercise.quantity);
-							}
-
-
- 							labels.push(exercise.miles);
- 							//chartData.push(exercise.quantity);
- 							++exeIndex;
- 						});
- 						console.log(chartData);
- 					}
- 					var data = {
-			            message: 'Here\'s how it went on your route ' + route,
-			            label: JSON.stringify(labels),
-			            workouts: JSON.stringify(workouts),
-			            data: JSON.stringify(chartData)
+			const route = request.payload.route;
+				dataNomilizer(request.payload,function(err,msg){
+					var data = {
+			            message: 'Here\'s how it went on your route ' + route
 			        };
-			        return reply.view('report',data);
- 				});
-			// build the index
-			// for (var x in request.payload) {
-			//    index.push(x);
-			// }
-			// var intervals = interval;
-			// for (var i = 1; i <= count; i++) {
-			// 	var comma = "";
-			// 	if(i !== count - 1){
-			// 		comma  = ",";
-			// 	}
-			// 	labels = labels.concat(intervals  + comma);
-			// 	chartData = chartData.concat(request.payload[index[(i * 4) +1]] + comma);
-			// 	intervals = parseFloat(intervals) + parseFloat(interval);
-			// };
-			// labels = labels.concat(']');
-			// chartData = chartData.concat(']');
-	 		
+					if(err){
+						console.log("Error: " + JSON.stringify(err));
+					}else{
+						let x = 0;
+						let exercises = msg.exercises;
+						getWorkoutDataByRoute(msg.route,msg.distance,msg.interval,function(err,wrk){
+							exercises.forEach(function(exercises){
+								if(x % 2 == 0){
+									exercises["class"] = "even";
+								}else{
+									exercises["class"] = "odd";
+								}
+								console.log(wrk.length);
+								if(wrk[1]){
+									exercises["past"] = wrk[1].exercises[x].quantity;
+								}
+								++x;
+							});
+							data["workouts"] = exercises;
+			        		return reply.view('report',data);
+			        	});
+					}
+					
+				});
         },
         payload:{
             output: 'data',
