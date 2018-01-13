@@ -1,0 +1,27 @@
+<div class="odd">
+	<div class="workouts">
+		<div class="el">
+			<label for="mile{{this}}">Mile</label>
+			<input type="number" name="mile{{this}}" value="^" class="miles" />
+		</div>	
+		<div class="el">
+			<label for="workout{{this}}">Workout type</label>
+			<select name="workout{{this}}" class="exercise">
+				<option value="-" selected="" disabled="">workout type</option>
+				<option value="burpes">Burpes</option>
+				<option value="jaxs">Jumping Jaxes</option>
+				<option value="abs">Ab Work</option>
+				<option value="monkey">Monkey Bars</option>
+				<option value="pullups">pullups</option>
+			</select>
+		</div>
+		<div class="el">
+			<label for="quantity{{this}}">Reps</label>
+			<input type="number" name="quantity{{this}}" class="reps" />
+		</div>
+		<div class="el">
+			<label for="workoutcomment{{this}}">Comments</label>
+			<textarea class="comment" name="workoutcomment{{this}}" col="10" row="2"></textarea>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,20 @@
+
+<table class="breakdown">
+	<thead>
+		<th>Distance</th>
+		<th>Workout</th>
+		<th>Reps</th>
+		<th>Previous</th>
+	</thead>
+	<tbody>
+		{{#each workouts}}
+			<tr class={{class}}>
+				<td>{{this.miles}}</td>
+				<td>{{this.workout}}</td>
+				<td>{{this.quantity}}</td>
+				<td>{{this.past}}</td>
+			</tr>
+		{{/each}}
+	</tbody>
+</table>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>

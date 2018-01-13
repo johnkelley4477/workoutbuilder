@@ -35,9 +35,21 @@
 			input, select, textarea{
 				font-size: 16px;
 			}
+			#resubmit{
+				width: 125px;
+			    float: none;
+			}
+			#date {
+		    	width: 155px;
+			}
+			div#selects input {
+			    width: 100px;
+			}
 		</style>
 	</head>
 	<body>
+		<h1>Your fortune</h1>
+		<p>{{fortune}}</p>
 		<div id='selects'>
 			<input type='number' name'distance' id='distance' placeholder='Running Distance'/>
 			<select name='interval' id='interval'>

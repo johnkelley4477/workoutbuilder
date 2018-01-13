@@ -1,0 +1,20 @@
+<div class="{{@flip}}">
+	<div class="workouts">
+		<div class="el">
+			<label for="mile{{@index}}">Mile</label>
+			<input type="number" name="mile{{@index}}" step="any" value="{{@mileage}}" class="miles" />
+		</div>	
+		<div class="el">
+			<label for="workout{{@index}}">Workout type</label>
+			<input type="text" name="workout{{@index}}" class="exercise" value="{{@workout}}" />
+		</div>
+		<div class="el">
+			<label for="quantity{{@index}}">Reps</label>
+			<input type="number" name="quantity{{@index}}" class="reps" value="{{@quantity}}"/>
+		</div>
+		<div class="el">
+			<label for="workoutcomment{{@index}}">Comments</label>
+			<textarea class="comment" name="workoutcomment{{@index}}" col="1" row="2"></textarea>
+		</div>
+	</div>
+</div>
