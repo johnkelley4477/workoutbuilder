@@ -2,15 +2,22 @@
 	<div class="workouts">
 		<div class="el">
 			<label for="mile{{@index}}">Mile</label>
-			<input type="number" name="mile{{@index}}" step="any" value="{{@mileage}}" class="miles" />
+			<input type="number" name="mile{{@index}}" value="{{@mileage}}" class="miles" />
 		</div>	
 		<div class="el">
 			<label for="workout{{@index}}">Workout type</label>
-			<input type="text" name="workout{{@index}}" class="exercise" value="{{@workout}}" />
+			<select name="workout{{@index}}" class="exercise">
+				<option value="-" selected="" disabled="">workout type</option>
+				<option value="burpes">Burpes</option>
+				<option value="jaxs">Jumping Jaxes</option>
+				<option value="abs">Ab Work</option>
+				<option value="monkey">Monkey Bars</option>
+				<option value="pullups">pullups</option>
+			</select>
 		</div>
 		<div class="el">
 			<label for="quantity{{@index}}">Reps</label>
-			<input type="number" name="quantity{{@index}}" class="reps" value="{{@quantity}}"/>
+			<input type="number" name="quantity{{@index}}" class="reps" />
 		</div>
 		<div class="el">
 			<label for="workoutcomment{{@index}}">Comments</label>
