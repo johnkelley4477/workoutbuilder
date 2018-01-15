@@ -90,6 +90,22 @@ function getUniqueRoutes(callback){
 	});
 }
 
+function getUniqueWorkouts(callback){
+	var result = "failed"
+	MongoClient.connect(url, function(err, db) {
+	 	if (err) throw err;
+	 	
+	 	db.collection("workouts").distinct("exercises.workout",{},(function(err, docs){
+	        if(err){
+	            callback(err);
+	        }
+	        if(docs){  
+	        	callback(null,docs);
+	        }
+   		}));
+	});
+}
+
 function dataNomilizer(data,callback){
 	var index = [],				
 		payload = {},
@@ -167,7 +183,7 @@ server.route({
 	    	};
 	       
 	    	if(!err){
-	        	data["workoutArray"] = msg.toString();
+	        	data["workoutArray"] = msg;
 	        }
 	        
 	       return reply.view('workout',data);
@@ -215,8 +231,13 @@ server.route({
 	 			interval : interval,
 	 			past : msg[0].exercises
 	 		}
-		    
-		    return reply.view('workout_details',data);
+		    getUniqueWorkouts(function(err,msg){
+		    	data["exercisesArray"] = msg;
+		    	getUniqueRoutes(function(err,msg){
+		    		data["workoutArray"] = msg;
+		    		return reply.view('workout_details',data);
+		    	});
+		    });
 	   });
     }
 });
