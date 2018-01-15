@@ -28,13 +28,19 @@
 <script>
   //var exercises = '';
 	$( function() {
-  	//var workoutTypes = {{workoutArray}};
-    const tags = '{{workoutArray}}',
+    const tags = '{{{workoutArray}}}',
         availableTags = tags.split(',');
     $( "#route" ).autocomplete({
       source: availableTags
     });
-  } );
+  });
+  $( function() {
+      const tags = '{{{exercisesArray}}}',
+        availableTags = tags.split(',');
+      $( ".exercise" ).autocomplete({
+        source: availableTags
+      });
+    });
 
   $('#resubmit').on('click',()=>{
     window.location = '/workout/'+ $('#route').val() + "/" +  $('#date').val() + "/" +  $('#distance').val() + "/" +  $('#interval').val();
