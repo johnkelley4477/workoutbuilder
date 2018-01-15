@@ -207,13 +207,17 @@ server.route({
  			distance = request.params.distance,
  			interval = request.params.interval;
 		getWorkoutDataByRoute(route,distance,interval,function(err,msg){
+			let past = null;
+			if (msg.length > 0){
+				past = msg[0].exercises;
+			}
 			let data = {
 	            message: 'How did it go?',
 	            route :route,
 				date : date,
 	 			distance : distance,
 	 			interval : interval,
-	 			past : msg[0].exercises
+	 			past : past
 	 		}
 		    
 		    return reply.view('workout_details',data);

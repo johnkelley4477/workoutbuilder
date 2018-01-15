@@ -14,7 +14,7 @@ forLoop  = function(from, to, incr, distance, past, context){
     	}else{
     		context.data.flip = "odd";
     	}
-        if (past[i].miles < 0 || past[i].miles === '' || past[i].miles === null || past[i].miles === undefined){
+        if (past === null){
             context.data.mileage = mileage;
         }else{
             context.data.mileage = past[i].miles;
