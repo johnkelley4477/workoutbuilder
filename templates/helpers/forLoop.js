@@ -1,6 +1,6 @@
 var _ = require('lodash'),forLoop;
 
-forLoop  = function(from, to, incr, distance, context){
+forLoop  = function(from, to, incr, distance, past, context){
 	if(_.isEmpty(context)){
 		return 0;
 	}
@@ -14,8 +14,15 @@ forLoop  = function(from, to, incr, distance, context){
     	}else{
     		context.data.flip = "odd";
     	}
-    	context.data.mileage = mileage;
-    	context.data.index = i;
+        if (past[i].miles < 0 || past[i].miles === '' || past[i].miles === null || past[i].miles === undefined){
+            context.data.mileage = mileage;
+        }else{
+            context.data.mileage = past[i].miles;
+            context.data.workout = past[i].workout;
+            context.data.quantity = past[i].quantity;
+        }
+    	
+        context.data.index = i;
         accum += context.fn(this);
         mileage = mileage + mileageStep;
     }

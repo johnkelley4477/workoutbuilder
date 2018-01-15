@@ -11,22 +11,36 @@
     <input type='button' id='resubmit' value='Re-Submit' class='btn'/>
   </div>
   <div id="workouts">
-    {{#forLoop 0 interval 1 distance}}
+    {{#forLoop 0 interval 1 distance past}}
       {{> exercise}}
     {{/forLoop}}
+    <div class="even">
+      <div class="center">
+        <div class="el">
+          <label class="vTop" for="comments">Comments</label>
+          <textarea rows="4" cols="73" name="comments" id="comments"></textarea>
+        </div>
+      </div>
+    </div>
   </div>
   <input class='btn' type='submit'/>
 </form>
 <script>
-  var exercises = '{{past}}';
+  //var exercises = '';
 	$( function() {
-  	//var workoutTypes = {{workoutArray}};
-    const tags = '{{workoutArray}}',
+    const tags = '{{{workoutArray}}}',
         availableTags = tags.split(',');
     $( "#route" ).autocomplete({
       source: availableTags
     });
-  } );
+  });
+  $( function() {
+      const tags = '{{{exercisesArray}}}',
+        availableTags = tags.split(',');
+      $( ".exercise" ).autocomplete({
+        source: availableTags
+      });
+    });
 
   $('#resubmit').on('click',()=>{
     window.location = '/workout/'+ $('#route').val() + "/" +  $('#date').val() + "/" +  $('#distance').val() + "/" +  $('#interval').val();

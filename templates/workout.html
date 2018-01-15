@@ -12,17 +12,21 @@
 	<div id="selects" class="btnbox">
 		<input class='btn' type='submit' />
 	</div>
+
 </form>
 <script>
 	var today = new Date();
 	$('#date').val(today.getFullYear()  + '-' +  ("0" + (today.getMonth() + 1)).slice(-2) + '-' + ("0" + today.getDate()).slice(-2));
+	{{#route}}
+		$('#distance').focus();
+	{{/route}}
   	$( function() {
 	  	const tags = '{{workoutArray}}',
 	    	availableTags = tags.split(',');
 	    $( "#route" ).autocomplete({
 	      source: availableTags
 	    });
-	  })
+	  });
   	$('#route').on('change',()=>{
   		window.location = '/workout/'+ $('#route').val();
   	});
